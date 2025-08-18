@@ -56,7 +56,7 @@ const HeroSection = () => {
               </Button>
             </Link>
             <Link to="/new-arrivals">
-              <Button variant="outline" className="border-primary-foreground text-primary-foreground hover:bg-primary-foreground hover:text-primary">
+              <Button variant="outline" className="border-primary-foreground text-primary hover:bg-primary-foreground hover:text-primary">
                 New Arrivals
               </Button>
             </Link>
