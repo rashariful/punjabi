@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { motion } from "framer-motion";
 import { useToast } from "@/hooks/use-toast";
+import { useCart } from "@/context/CartContext";
 import { Product } from "@/data/products";
 
 interface ProductCardProps {
@@ -13,8 +14,21 @@ interface ProductCardProps {
 
 const ProductCard = ({ product, index = 0 }: ProductCardProps) => {
   const { toast } = useToast();
+  const { addToCart } = useCart();
 
   const handleAddToCart = () => {
+    const cartItem = {
+      id: `${product.id}-${product.sizes[0]}-${product.colors[0]}`,
+      name: product.name,
+      price: product.price,
+      image: product.image,
+      size: product.sizes[0], // Default to first available size
+      color: product.colors[0], // Default to first available color
+      quantity: 1,
+    };
+
+    addToCart(cartItem);
+    
     console.log("Adding to cart:", product.name);
     toast({
       title: "Added to Cart",
