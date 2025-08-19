@@ -206,7 +206,7 @@ const ProductDetail = () => {
             {/* Size Selection */}
             <div>
               <h3 className="font-semibold mb-3">Size</h3>
-              <div className="grid grid-cols-5 gap-2">
+              <div className="grid grid-cols-5  gap-2 sm:w-6/12 w-full ">
                 {product.sizes.map(size => (
                   <Button
                     key={size}
@@ -261,7 +261,7 @@ const ProductDetail = () => {
             {/* Action Buttons */}
             <div className="flex gap-4">
               <Button 
-                className="flex-1 btn-hero"
+                className="flex-1 bg-orange-500 duration-300 hover:bg-orange-400"
                 onClick={handleAddToCart}
               >
                 <ShoppingCart className="w-5 h-5 mr-2" />
