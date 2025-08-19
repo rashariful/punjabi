@@ -55,13 +55,13 @@ const PromoSection = () => {
               high-quality Panjabi wear that combines tradition with modern comfort.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
-              <Link to="/categories">
+              <Link to="/categories" className="">
                 <Button className="btn-gold">
                   Explore Collection
                 </Button>
               </Link>
               <Link to="/about">
-                <Button variant="outline" className="border-secondary-foreground text-secondary-foreground hover:bg-secondary-foreground hover:text-secondary">
+                <Button variant="outline" className="border-secondary-foreground text-secondary hover:bg-secondary-foreground hover:text-secondary">
                   Learn More
                 </Button>
               </Link>
