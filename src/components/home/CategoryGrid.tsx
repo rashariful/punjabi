@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { categories } from "@/data/products";
 
+console.log(categories)
 const CategoryGrid = () => {
   return (
     <section className="py-16">

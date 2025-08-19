@@ -290,36 +290,36 @@ export const categories = [
     id: "casual",
     name: "Casual Panjabi",
     description: "Comfortable daily wear",
-    image: "/placeholder.svg"
+    image: pinkCasualImg
   },
   {
     id: "premium",
     name: "Premium Collection",
     description: "Luxury designs",
-    image: "/placeholder.svg"
+    image: navyPremiumImg
   },
   {
     id: "party",
     name: "Party Wear",
     description: "Modern & stylish",
-    image: "/placeholder.svg"
+    image: blackPartyImg
   },
   {
     id: "wedding",
     name: "Wedding Collection",
     description: "Special occasion wear",
-    image: "/placeholder.svg"
+    image: creamWeddingImg
   },
   {
     id: "cotton",
     name: "Cotton Panjabi",
     description: "Breathable comfort",
-    image: "/placeholder.svg"
+    image: whiteEidImg
   },
   {
     id: "festive",
     name: "Festive Wear",
     description: "Traditional celebrations",
-    image: "/placeholder.svg"
+    image:goldenFestiveImg
   }
 ];
