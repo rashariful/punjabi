@@ -31,10 +31,10 @@ const Header = () => {
   ];
 
   return (
-    <header className="sticky top-0 z-50 w-full bg-white/95 backdrop-blur-md border-b border-gray-100 shadow-sm">
+    <header className="sticky top-0 z-50 w-full  bg-white/95 backdrop-blur-md border-b border-gray-100 shadow-sm">
       {/* --- Top Navbar --- */}
       <div className="hidden md:flex items-center justify-between px-6 lg:px-8 h-10 bg-gradient-to-r from-gray-700 to-gray-900 text-sm text-white">
-        <div className="flex items-center space-x-6">
+        <div className="flex items-center space-x-6 ">
           <span className="flex items-center space-x-1.5 hover:text-amber-500 duration-300 transition-colors">
             <Phone size={14} className="text-white hover:text-amber-500 duration-300" />
             <span>+880 1234-567890</span>
@@ -93,14 +93,20 @@ const Header = () => {
         <div className="flex items-center space-x-2">
           {/* Wishlist */}
           <Link to="/wishlist">
-            <Button variant="ghost" size="icon" className="relative rounded-full hover:bg-amber-50 hover:text-amber-900">
+            <Button variant="ghost" size="icon" className="relative rounded-full  hover:bg-amber-50 hover:text-amber-900">
               <Heart className="w-6 h-6" />
-              <Badge className="absolute -top-1 -right-1 h-5 w-5 rounded-full p-0 text-xs bg-amber-600 hover:bg-amber-900">0</Badge>
+              <Badge className="absolute flex items-center justify-center -top-1 -right-1 h-5 w-5 rounded-full p-0 text-xs bg-amber-600 hover:bg-amber-900">0</Badge>
+            </Button>
+          </Link>
+          <Link to="/cart">
+            <Button variant="ghost" size="icon" className="relative rounded-full  hover:bg-amber-50 hover:text-amber-900">
+              <ShoppingCart className="w-6 h-6" />
+              <Badge className="absolute flex items-center justify-center -top-1 -right-1 h-5 w-5 rounded-full p-0 text-xs bg-amber-600 hover:bg-amber-900">0</Badge>
             </Button>
           </Link>
 
           {/* Cart */}
-          <Link to="/cart">
+          {/* <Link to="/cart">
             <Button variant="ghost" size="icon" className="relative rounded-full hover:bg-amber-50 hover:text-amber-900">
               <ShoppingCart className="w-6 h-6" />
               {totalItems > 0 && (
@@ -109,7 +115,7 @@ const Header = () => {
                 </Badge>
               )}
             </Button>
-          </Link>
+          </Link> */}
 
           {/* User Account */}
           <Link to="/login">
@@ -212,9 +218,6 @@ const Header = () => {
 
 export default Header;
 
-
-
-// import { useState } from "react";
 // import { Link } from "react-router-dom";
 // import { Search, Heart, ShoppingCart, User, Menu, X } from "lucide-react";
 // import { Button } from "@/components/ui/button";
