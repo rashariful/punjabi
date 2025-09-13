@@ -7,7 +7,7 @@ import { products } from "@/data/products";
 import { Star, Moon } from "lucide-react";
 
 const EidCollection = () => {
-  const eidProducts = products.filter(product => product.eidSpecial).slice(0, 3);
+  const eidProducts = products.filter(product => product.eidSpecial).slice(0, 5);
 
   return (
     <section className="py-16 bg-gradient-to-r from-primary/5 to-secondary/5 relative overflow-hidden">

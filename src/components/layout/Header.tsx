@@ -37,7 +37,7 @@ const Header = () => {
         <div className="flex items-center space-x-6 ">
           <span className="flex items-center space-x-1.5 hover:text-amber-500 duration-300 transition-colors">
             <Phone size={14} className="text-white hover:text-amber-500 duration-300" />
-            <span>+880 1234-567890</span>
+            <span>+880 1850 273 117</span>
           </span>
           <span className="flex items-center space-x-1.5  hover:text-amber-500 duration-300 transition-colors">
             <Mail size={14} className="text-white hover:text-amber-500 duration-300" />

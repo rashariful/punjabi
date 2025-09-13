@@ -239,7 +239,7 @@ export const products: Product[] = [
     newArrival: true,
     sale: true,
     bestSelling: false,
-    eidSpecial: false,
+    eidSpecial: true,
     festivalSpecial: true,
   },
   {
