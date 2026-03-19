@@ -4,8 +4,9 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { motion } from "framer-motion";
 import { useToast } from "@/hooks/use-toast";
-import { useCart } from "@/context/CartContext";
+
 import { Product } from "@/data/products";
+import { useStore } from "@/context/StoreContext";
 
 interface ProductCardProps {
   product: Product;
@@ -14,7 +15,7 @@ interface ProductCardProps {
 
 const ProductCard = ({ product, index = 0 }: ProductCardProps) => {
   const { toast } = useToast();
-  const { addToCart } = useCart();
+  const { addToCart, addToWishlist, state } = useStore();
 
   const handleAddToCart = () => {
     const cartItem = {

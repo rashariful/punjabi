@@ -6,13 +6,14 @@ import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { motion, AnimatePresence } from "framer-motion";
 import { useToast } from "@/hooks/use-toast";
-import { useCart } from "@/context/CartContext";
+import { useStore } from "@/context/StoreContext";
+
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const { toast } = useToast();
-  const { totalItems } = useCart();
+  const { state } = useStore();
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -194,15 +195,27 @@ const Header = () => {
                   <Heart className="w-5 h-5 mb-1" />
                   Wishlist
                 </Link>
-                <Link to="/cart" className="flex flex-col items-center text-sm text-white relative" onClick={() => setIsMenuOpen(false)}>
-                  <ShoppingCart className="w-5 h-5 mb-1" />
-                  Cart
-                  {totalItems > 0 && (
-                    <span className="absolute top-0 right-4 bg-amber-600 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
-                      {totalItems}
-                    </span>
+                <Link to="/cart" className="relative">
+                <Button variant="ghost" size="icon" className="h-12 w-12">
+                  <ShoppingCart className="h-5 w-5" />
+                    {state.cart.length > 0 && (
+                    <Badge 
+                      variant="destructive" 
+                      className="absolute -top-1 -right-1 h-5 w-5 p-0 flex items-center justify-center text-xs"
+                    >
+                      {state.cart.length}
+                    </Badge>
                   )}
-                </Link>
+                  {/* {getTotalItems() > 0 && (
+                    <Badge 
+                      variant="destructive" 
+                      className="absolute -top-1 -right-1 h-5 w-5 p-0 flex items-center justify-center text-xs"
+                    >
+                      {getTotalItems()}
+                    </Badge>
+                  )} */}
+                </Button>
+              </Link>
                 <Link to="/login" className="flex flex-col items-center text-sm text-white" onClick={() => setIsMenuOpen(false)}>
                   <User className="w-5 h-5 mb-1" />
                   Account

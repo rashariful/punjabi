@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { ArrowLeft, Heart, Share2, Star, ShoppingCart, Truck, Shield, RotateCcw } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -9,9 +9,23 @@ import { Separator } from "@/components/ui/separator";
 import { motion } from "framer-motion";
 import { useToast } from "@/hooks/use-toast";
 import { products } from "@/data/products";
+import { useGtmEvents } from "@/hooks/useGtmEvents";
+import { useStore } from "@/context/StoreContext";
+
 
 const ProductDetail = () => {
   const { productId } = useParams();
+  const { trackContentView, trackAddToWishlist, trackAddToCart } =
+    useGtmEvents();
+  useEffect(() => {
+    trackContentView({
+      id: product.id,
+      name: product.name,
+      price: product.price,
+      category: product.category,
+    });
+  }, []);
+  const { addToCart, addToWishlist, state } = useStore();
   const product = products.find(p => p.id === productId);
   const { toast } = useToast();
   
@@ -260,7 +274,48 @@ const ProductDetail = () => {
             </div>
 
             {/* Action Buttons */}
-            <div className="flex gap-4">
+             <div className="flex gap-4">
+            <Button
+              onClick={() => {
+                addToCart(product);
+
+                // 🔥 ADD TO CART TRACKING
+                trackAddToCart({
+                  id: product.id,
+                  name: product.name,
+                  price: Number(product.price.toFixed(2)),
+                });
+              }}
+               className="flex-1 bg-orange-500 duration-300 hover:bg-orange-400"
+              // disabled={!product.inStock}
+            >
+              <ShoppingCart className="h-4 w-4 mr-2" />
+              {/* {product.inStock ? "Add to Cart" : "Out of Stock"} */} add to cart
+            </Button>
+
+            {/* <Button
+              variant="outline"
+              onClick={() => {
+                addToWishlist(product);
+
+                // 🔥 WISHLIST TRACKING (ONLY IF NOT ALREADY IN WISHLIST)
+                if (!isInWishlist) {
+                  trackAddToWishlist({
+                    id: product.id,
+                    name: product.name,
+                    price: Number(product.price.toFixed(2)),
+                  });
+                }
+              }}
+              className={isInWishlist ? "text-red-500 border-red-200" : ""}
+            >
+              <Heart
+                className={`h-4 w-4 ${isInWishlist ? "fill-red-500" : ""}`}
+              />
+            </Button> */}
+          </div>
+
+            {/* <div className="flex gap-4">
               <Button 
                 className="flex-1 bg-orange-500 duration-300 hover:bg-orange-400"
                 onClick={handleAddToCart}
@@ -271,7 +326,7 @@ const ProductDetail = () => {
               <Button variant="outline" className="flex-1">
                 Buy Now
               </Button>
-            </div>
+            </div> */}
 
             {/* Features */}
             <div className="grid grid-cols-1 gap-4">

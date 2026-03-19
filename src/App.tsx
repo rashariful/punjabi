@@ -15,10 +15,13 @@ import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
 
-import { CartProvider } from "@/context/CartContext";
+
 import { useGtmEvents } from "./hooks/useGtmEvents";
 import { useEffect } from "react";
 import { initGTM } from "./lib/gtm";
+import { StoreProvider } from "./context/StoreContext";
+import Checkout from "./pages/Checkout";
+import OrderConfirmation from "./pages/OrderConfirmation";
 
 const App = () => {
     // ✅ GTM init on app load
@@ -30,7 +33,7 @@ const App = () => {
 
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
-      <CartProvider>
+      <StoreProvider>
         <Toaster />
         <Sonner />
         <BrowserRouter>
@@ -47,12 +50,14 @@ const App = () => {
               <Route path="/new-arrivals" element={<Categories />} />
               <Route path="/sale" element={<Categories />} />
               <Route path="/about" element={<NotFound />} />
+                 <Route path="/checkout" element={<Checkout />} />
+                <Route path="/order-confirmation" element={<OrderConfirmation />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>
           </Layout>
         </BrowserRouter>
-      </CartProvider>
+      </StoreProvider>
     </TooltipProvider>
   </QueryClientProvider>
   )
