@@ -16,8 +16,18 @@ import NotFound from "./pages/NotFound";
 const queryClient = new QueryClient();
 
 import { CartProvider } from "@/context/CartContext";
+import { useGtmEvents } from "./hooks/useGtmEvents";
+import { useEffect } from "react";
+import { initGTM } from "./lib/gtm";
 
-const App = () => (
+const App = () => {
+    // ✅ GTM init on app load
+  useEffect(() => {
+    initGTM();
+  }, []);
+
+  return (
+
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
       <CartProvider>
@@ -45,6 +55,12 @@ const App = () => (
       </CartProvider>
     </TooltipProvider>
   </QueryClientProvider>
-);
+  )
+}
 
+// Wrapper to auto-track page views using your custom hook
+const PageTrackerWrapper = () => {
+  useGtmEvents(); // 🔹 auto page_view tracking
+  return null;
+};
 export default App;

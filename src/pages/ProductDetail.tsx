@@ -33,6 +33,7 @@ const ProductDetail = () => {
     );
   }
 
+  // handle add to cart 
   const handleAddToCart = () => {
     if (!selectedSize) {
       toast({
@@ -55,7 +56,7 @@ const ProductDetail = () => {
       description: `${product.name} has been added to your cart.`,
     });
   };
-
+// handle add to wishlist 
   const handleAddToWishlist = () => {
     setIsWishlisted(!isWishlisted);
     console.log("Adding to wishlist:", product.name);
