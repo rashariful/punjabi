@@ -22,6 +22,7 @@ import { initGTM } from "./lib/gtm";
 import { StoreProvider } from "./context/StoreContext";
 import Checkout from "./pages/Checkout";
 import OrderConfirmation from "./pages/OrderConfirmation";
+import ScrollToTop from "./hooks/ScrollToTop";
 
 const App = () => {
     // ✅ GTM init on app load
@@ -37,6 +38,7 @@ const App = () => {
         <Toaster />
         <Sonner />
         <BrowserRouter>
+          <ScrollToTop />
           <Layout>
             <Routes>
               <Route path="/" element={<Index />} />
