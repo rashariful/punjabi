@@ -16,38 +16,34 @@ interface ProductCardProps {
 
 const ProductCard = ({ product, index = 0 }: ProductCardProps) => {
   const { toast } = useToast();
-    const { trackContentView, trackAddToWishlist, trackAddToCart } =
+    const { trackAddToWishlist, trackAddToCart } =
       useGtmEvents();
   const { addToCart, addToWishlist, state } = useStore();
+  const isInWishlist = state.wishlist.some(item => item.id === product.id);
 
-  const handleAddToCart = () => {
-    const cartItem = {
-      id: `${product.id}-${product.sizes[0]}-${product.colors[0]}`,
+  const handleAddToCart = (e: React.MouseEvent) => {
+    e.preventDefault();
+    addToCart(product);
+     // ✅ GTM EVENT FIRE
+    trackAddToCart({
+      id: product.id,
       name: product.name,
       price: product.price,
-      image: product.image,
-      size: product.sizes[0], // Default to first available size
-      color: product.colors[0], // Default to first available color
-      quantity: 1,
-    };
-
-    addToCart(cartItem);
-    
-    console.log("Adding to cart:", product.name);
-    toast({
-      title: "Added to Cart",
-      description: `${product.name} has been added to your cart.`,
-    });
+      quantity: product.quantity,
+  category: product.category,   
+ });
   };
 
-  const handleAddToWishlist = () => {
-    console.log("Adding to wishlist:", product.name);
-    toast({
-      title: "Added to Wishlist",
-      description: `${product.name} has been added to your wishlist.`,
-    });
+  const handleAddToWishlist = (e: React.MouseEvent) => {
+    e.preventDefault();
+    addToWishlist(product);
+    trackAddToWishlist({
+  id: product.id,
+  name: product.name,
+  price: product.price,
+  category: product.category,
+});
   };
-
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -83,9 +79,11 @@ const ProductCard = ({ product, index = 0 }: ProductCardProps) => {
             size="icon"
             variant="secondary"
             className="w-8 h-8 bg-background/80 hover:bg-background"
-            onClick={handleAddToWishlist}
+           onClick={handleAddToWishlist}
           >
-            <Heart className="w-4 h-4" />
+           <Heart 
+              className={`h-4 w-4 ${isInWishlist ? 'fill-red-500 text-red-500' : ''}`} 
+            />
           </Button>
         </div>
 
@@ -93,16 +91,7 @@ const ProductCard = ({ product, index = 0 }: ProductCardProps) => {
         <div className="absolute bottom-3 left-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
           <Button
             className="w-full bg-orange-500 duration-300 hover:bg-orange-400"
-             onClick={() => {
-                addToCart(product);
-
-                // 🔥 ADD TO CART TRACKING
-                trackAddToCart({
-                  id: product.id,
-                  name: product.name,
-                  price: Number(product.price.toFixed(2)),
-                });
-              }}
+             onClick={ handleAddToCart}
           >
             <ShoppingCart className="w-4 h-4 mr-2" />
             Add to Cart
