@@ -51,7 +51,7 @@ const HeroSection = () => {
             className="flex flex-col sm:flex-row gap-4"
           >
             <Link to="/categories">
-              <Button className="btn-hero">
+              <Button className="bg-gradient-to-r from-orange-400 to-orange-500 hover:from-orange-500 hover:to-orange-400 duration-300 transition-all hover:scale-105">
                 Shop Collection
               </Button>
             </Link>
