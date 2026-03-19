@@ -7,6 +7,7 @@ import { useToast } from "@/hooks/use-toast";
 
 import { Product } from "@/data/products";
 import { useStore } from "@/context/StoreContext";
+import { useGtmEvents } from "@/hooks/useGtmEvents";
 
 interface ProductCardProps {
   product: Product;
@@ -15,6 +16,8 @@ interface ProductCardProps {
 
 const ProductCard = ({ product, index = 0 }: ProductCardProps) => {
   const { toast } = useToast();
+    const { trackContentView, trackAddToWishlist, trackAddToCart } =
+      useGtmEvents();
   const { addToCart, addToWishlist, state } = useStore();
 
   const handleAddToCart = () => {
@@ -89,8 +92,17 @@ const ProductCard = ({ product, index = 0 }: ProductCardProps) => {
         {/* Quick Add to Cart */}
         <div className="absolute bottom-3 left-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
           <Button
-            className="w-full btn-gold"
-            onClick={handleAddToCart}
+            className="w-full bg-orange-500 duration-300 hover:bg-orange-400"
+             onClick={() => {
+                addToCart(product);
+
+                // 🔥 ADD TO CART TRACKING
+                trackAddToCart({
+                  id: product.id,
+                  name: product.name,
+                  price: Number(product.price.toFixed(2)),
+                });
+              }}
           >
             <ShoppingCart className="w-4 h-4 mr-2" />
             Add to Cart
