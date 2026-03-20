@@ -24,7 +24,7 @@ const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const { toast } = useToast();
-  const { state } = useStore();
+  const { state, getTotalItems } = useStore();
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -43,116 +43,172 @@ const Header = () => {
   ];
 
   return (
-  <header className="sticky top-0 z-50 w-full bg-white/95 backdrop-blur-md border-b border-gray-100 shadow-sm">
+    <header className="sticky top-0 z-50 w-full bg-white/95 backdrop-blur-md border-b border-gray-100 shadow-sm">
 
-  {/* --- Top Navbar (FULL WIDTH BG) --- */}
-  <div className="w-full bg-gradient-to-r from-gray-800 to-gray-900 text-sm text-white">
-    <div className="hidden md:flex items-center justify-between h-10 container mx-auto px-4 lg:px-8">
-      
-      <div className="flex items-center space-x-6">
-        <span className="flex items-center space-x-1.5 hover:text-amber-500 transition">
-          <Phone size={14} />
-          <span>+880 1850 273 117</span>
-        </span>
-        <span className="flex items-center space-x-1.5 hover:text-amber-500 transition">
-          <Mail size={14} />
-          <span>info@punjabpalace.com</span>
-        </span>
-      </div>
+      {/* --- Top Navbar --- */}
+      <div className="w-full bg-gradient-to-r from-gray-800 to-gray-900 text-sm text-white">
+        <div className="hidden md:flex items-center justify-between h-10 container mx-auto px-4 lg:px-8">
+          <div className="flex items-center space-x-6">
+            <span className="flex items-center space-x-1.5 hover:text-amber-500 transition">
+              <Phone size={14} />
+              <span>+880 1850 273 117</span>
+            </span>
+            <span className="flex items-center space-x-1.5 hover:text-amber-500 transition">
+              <Mail size={14} />
+              <span>info@punjabpalace.com</span>
+            </span>
+          </div>
 
-      <div className="flex items-center space-x-4">
-        <Facebook size={16} className="hover:text-amber-500" />
-        <Instagram size={16} className="hover:text-amber-500" />
-        <Twitter size={16} className="hover:text-amber-500" />
-      </div>
-
-    </div>
-  </div>
-
-  {/* --- Middle Navbar --- */}
-  <div className="w-full bg-white">
-    <div className="container mx-auto px-4 lg:px-8 flex items-center justify-between h-16 lg:h-20">
-
-      {/* Logo */}
-      <Link to="/" className="flex items-center space-x-3">
-       <img
-  src="https://d19qnzrkx7fd3b.cloudfront.net/static/images/ILLIYEEN-Logo2.png"
-  alt="Punjab Palace"
-  className="h-12 md:h-14 lg:h-16 w-auto"
-/>
-      </Link>
-
-      {/* Search */}
-      <form onSubmit={handleSearch} className="hidden md:flex flex-1 max-w-xl mx-8">
-        <div className="relative w-full">
-          <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-amber-600 w-5 h-5" />
-          <Input
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="pl-12 h-11 border-amber-300"
-          />
-          <Button className="absolute right-1 top-1/2 -translate-y-1/2 h-9 bg-amber-600">
-            Search
-          </Button>
+          <div className="flex items-center space-x-4">
+            <Facebook size={16} className="hover:text-amber-500" />
+            <Instagram size={16} className="hover:text-amber-500" />
+            <Twitter size={16} className="hover:text-amber-500" />
+          </div>
         </div>
-      </form>
-
-      {/* Actions */}
-      <div className="flex items-center space-x-2">
-
-        {/* Wishlist */}
-        <Link to="/wishlist">
-          <Button variant="ghost" size="icon" className="relative">
-            <Heart className="w-6 h-6" />
-            {state.wishlist.length > 0 && (
-              <Badge className="absolute -top-1 -right-1 bg-amber-600">
-                {state.wishlist.length}
-              </Badge>
-            )}
-          </Button>
-        </Link>
-
-        {/* Cart */}
-        <Link to="/cart">
-          <Button variant="ghost" size="icon" className="relative">
-            <ShoppingCart className="w-6 h-6" />
-             {state.cart.length > 0 && (
-              <Badge className="absolute -top-1 -right-1 bg-amber-600">
-                {state.cart.length}
-              </Badge>
-            )}
-          </Button>
-        </Link>
-
-        {/* User */}
-        <Link to="/login">
-          <Button variant="ghost" size="icon">
-            <User className="w-6 h-6" />
-          </Button>
-        </Link>
-
       </div>
 
-    </div>
-  </div>
+      {/* --- Middle Navbar --- */}
+      <div className="w-full bg-white">
+        <div className="container mx-auto px-4 lg:px-8 flex items-center justify-between h-16 lg:h-20 gap-2">
 
-  {/* --- Bottom Navbar --- */}
-  <div className="w-full bg-gradient-to-b from-amber-600 to-orange-500">
-    <div className="container mx-auto px-4 lg:px-8 flex items-center justify-center h-14">
-
-      <nav className="flex space-x-10 text-white font-medium">
-        {navItems.map((item) => (
-          <Link key={item.name} to={item.href} className="relative group">
-            {item.name}
-            <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-white group-hover:w-full transition-all"></span>
+          {/* Logo */}
+          <Link to="/" className="flex items-center space-x-2">
+            <img
+              src="https://d19qnzrkx7fd3b.cloudfront.net/static/images/ILLIYEEN-Logo2.png"
+              alt="Punjab Palace"
+              className="h-10 md:h-14 lg:h-16 w-auto"
+            />
           </Link>
-        ))}
-      </nav>
 
-    </div>
-  </div>
+          {/* Search (Desktop) */}
+          <form
+            onSubmit={handleSearch}
+            className="hidden md:flex flex-1 max-w-xl mx-4"
+          >
+            <div className="relative w-full">
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-amber-600 w-5 h-5" />
+              <Input
+                placeholder="Search Panjabi..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="pl-12 h-11 border-amber-300"
+              />
+              <Button className="absolute right-1 top-1/2 -translate-y-1/2 h-9 bg-amber-600 text-white">
+                Search
+              </Button>
+            </div>
+          </form>
 
-</header>
+          {/* Actions */}
+          <div className="flex items-center space-x-1 md:space-x-2">
+
+            {/* Wishlist */}
+            <Link to="/wishlist">
+              <Button variant="ghost" size="icon" className="relative">
+                <Heart className="w-6 h-6" />
+                {state.wishlist.length > 0 && (
+                  <Badge className="absolute -top-1 -right-1 bg-amber-600">
+                    {state.wishlist.length}
+                  </Badge>
+                )}
+              </Button>
+            </Link>
+
+            {/* Cart */}
+            <Link to="/cart">
+              <Button variant="ghost" size="icon" className="relative">
+                <ShoppingCart className="w-6 h-6" />
+                {getTotalItems() > 0 && (
+                  <Badge className="absolute -top-1 -right-1 bg-amber-600">
+                    {getTotalItems()}
+                  </Badge>
+                )}
+              </Button>
+            </Link>
+
+            {/* User */}
+            <Link to="/login">
+              <Button variant="ghost" size="icon">
+                <User className="w-6 h-6" />
+              </Button>
+            </Link>
+
+            {/* Mobile Menu */}
+            <Button
+              variant="ghost"
+              size="icon"
+              className="lg:hidden"
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+            >
+              {isMenuOpen ? (
+                <X className="w-6 h-6" />
+              ) : (
+                <Menu className="w-6 h-6" />
+              )}
+            </Button>
+          </div>
+        </div>
+      </div>
+
+      {/* --- Bottom Navbar --- */}
+      <div className="hidden lg:block w-full bg-gradient-to-b from-amber-600 to-orange-500">
+        <div className="container mx-auto px-4 lg:px-8 flex items-center justify-center h-14">
+          <nav className="flex space-x-10 text-white font-medium">
+            {navItems.map((item) => (
+              <Link key={item.name} to={item.href} className="relative group">
+                {item.name}
+                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-white group-hover:w-full transition-all"></span>
+              </Link>
+            ))}
+          </nav>
+        </div>
+      </div>
+
+      {/* --- Mobile Menu --- */}
+      <AnimatePresence>
+        {isMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            className="lg:hidden bg-white border-t"
+          >
+            <div className="px-4 py-4 space-y-4">
+
+              {/* Mobile Search */}
+              <form onSubmit={handleSearch}>
+                <Input
+                  placeholder="Search Panjabi..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                />
+              </form>
+
+              {/* Nav Items */}
+              {navItems.map((item) => (
+                <Link
+                  key={item.name}
+                  to={item.href}
+                  className="block py-2 font-medium text-gray-700"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  {item.name}
+                </Link>
+              ))}
+
+              {/* Bottom */}
+              <div className="flex justify-around pt-4 border-t text-sm">
+                <Link to="/wishlist">❤️ Wishlist</Link>
+                <Link to="/cart">🛒 Cart</Link>
+                <Link to="/login">👤 Account</Link>
+              </div>
+
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+    </header>
   );
 };
 
